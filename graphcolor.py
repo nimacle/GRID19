@@ -37,7 +37,7 @@ class Application(tk.Frame):
         self.quit.pack(side="right")    #alignement de la page
         
     def change(self):
-    '''actualisation de la fenetre en fonction des nouvelles valeurs'''
+        '''actualisation de la fenetre en fonction des nouvelles valeurs'''
         for b in range(n):
             for c in range(n):
                 self.a.create_rectangle(b*a,c*a,(b*a)+a, (c*a)+a,fill="white")
