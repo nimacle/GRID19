@@ -34,3 +34,30 @@ print(ligne5)
 Matrice=np.array([ligne1,ligne2,ligne2,ligne3,ligne4,ligne5])
 
 print(Matrice[0][1])
+
+
+
+for day in range(0,1000):
+
+    #calcul des changements d'états
+
+    #phase de coloriage
+
+
+
+
+
+
+"""
+def coloriage():
+    for line in Matrice:
+        for value in line:
+            if Matrice[x][y]==0:
+                colorier en rouge
+            if Matrice[x][y]==1:
+"""
+#Population = nombre de personnes
+#R = nbre de personnes inféctées en moyenne
+#S = nbre de personnes soignées/immunisées
+#M = mortalité
+def change(Population, R, S, ):
