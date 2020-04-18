@@ -1,1 +1,17 @@
-Population imobile,Pas de cluster , Pas de lieu de rassemblement, 
+Contraintes:
+Population imobile
+Pas de cluster 
+Pas de lieu de rassemblement
+
+Objectifs court terme:
+Trouver les etats
+Fonction coloriage
+Fonction calcul matrice i+1
+
+Objectifs long terme :
+Pop mobile
+Saturation des hopitaux
+Cluster(pays)
+Lieux de rassemblement
+Animation
+Evenements de rassemblements(concert, festival...)
