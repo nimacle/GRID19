@@ -1,114 +1,84 @@
 import numpy as np
 import pandas
 import matplotlib.pyplot as plt
+import random
 
 
-"""
-with open('C:/Users/henri/Downloads/COVID-19-master/cssecovid19data/cssecovid19dailyreports/04-13-2020.csv','r') as f:
+n=int(input("Chosissez le nombre de population, doit etre un carré parfait (ex: 4, 9, 16, 25, 36, 49, 64, 81, 100...): "))
 
-    data = f.readlines()
-    list_country=[]
-    list_deaths=[]
-
-    for line in data:
-        list1 = line.split(",")
-        list_country.append(list1[3])
-        list_deaths.append(list1[7])
-
-    print(list_country)
-"""
-
-ligne1=[0,0,0,0,0]
-ligne2=[0,0,1,0,0]
-ligne3=[0,0,1,0,0]
-ligne4=[0,1,0,0,0]
-ligne5=[0,0,0,0,0]
-
-
-
-Matrice=np.array([ligne1,ligne2,ligne3,ligne4,ligne5])
-
+Matrix=np.zeros([n,n], dtype=int)
 
 #app.n=population
 #app.r=transmition
-print("Matrice de départ:\n",Matrice,"\n\n")
 
-Ligne_liste_pointeurs_malades=[]
-Rang_liste_pointeurs_malades=[]
+def Simulation(Matrice, jours, population):
 
-# Get the index of elements with value 15
-result = np.where(Matrice == 1)
+    start_x=random.randint(0,population)
+    start_y=random.randint(0,population)
+    Matrice[start_x][start_y]=1
+    print("Matrice de départ:\n",Matrice,"\n\n")
 
-listOfCoordinates= list(zip(result[0], result[1]))
+    for i in range(0,jours):
+        result = np.where(Matrice == 1)
+        listOfCoordinates= list(zip(result[0], result[1]))
 
 
-for coords in listOfCoordinates:
-    x=coords[0]
-    y=coords[1]
+        for coords in listOfCoordinates:
+            x=coords[0]
+            y=coords[1]
 
-    try:
-        Matrice[x-1][y]=1
-        Matrice[x][y+1]=1
-        Matrice[x][y-1]=1
-        Matrice[x+1][y]=1
-
-    except IndexError:      #cas ou c'est un bord
-            if y==0:
-                Matrice[x+1][y]=1
+            try:
                 Matrice[x-1][y]=1
                 Matrice[x][y+1]=1
-
-            elif y==len(Matrice):
-                Matrice[x-1][y]=1
-                Matrice[x+1][y]=1
                 Matrice[x][y-1]=1
+                Matrice[x+1][y]=1
 
-            else:
-                pass
-print(Matrice)
+            except IndexError:                                  #cas ou c'est un bord
+
+                if y==0 and x==0:                               #cas ou c'est un coin
+                    Matrice[x+1][y]=1
+                    Matrice[x][y+1]=1
+
+                elif y==0 and x==len(Matrice)-1:
+                    Matrice[x-1][y]=1
+                    Matrice[x][y+1]
+
+                elif y==len(Matrice) and x==0:
+                    Matrice[x+1][y]=1
+                    Matrice[x][y-1]=1
+
+                elif y==len(Matrice) and x==len(Matrice):
+                    Matrice[x-1][y]=1
+                    Matrice[x][y-1]=1
+
+                else:                                           #cas ou c'est un bord non coin
+
+                    if y==0:
+                        Matrice[x+1][y]=1
+                        Matrice[x-1][y]=1
+                        Matrice[x][y+1]=1
+
+                    elif y==len(Matrice)-1:
+                        Matrice[x-1][y]=1
+                        Matrice[x+1][y]=1
+                        Matrice[x][y-1]=1
+
+                    elif x==0:
+                        Matrice[x][y+1]=1
+                        Matrice[x+1][y]=1
+                        Matrice[x][y-1]=1
+
+                    elif x==len(Matrice)-1:
+                        Matrice[x-1][y]=1
+                        Matrice[x][y+1]=1
+                        Matrice[x][y-1]=1
+                    else:
+                        pass
+        print(Matrice)
+
+Simulation(Matrix,10, n)
 
 
-
-
-#for day in range(0,1):
-
-#calcul des changements d'états
-#ligne=0
-#for list in Matrice:
-#    rang=0
-#    for value in list:          #cas ou ce n'est pas un bord
-#        try:
-#            if value==1:
-#                #Matrice[ligne-1][rang]=1
-#                #Matrice[ligne+1][rang]=1
-#                #Matrice[ligne][rang-1]=1
-#                Matrice[ligne][rang+1]=1
-#                pass()
-#
-#            else:
-#                pass
-#
-#        except IndexError:      #cas ou c'est un bord
-#            if rang==0:
-#                #Matrice[ligne+1][rang]=1
-#                #Matrice[ligne][rang]=1
-#                Matrice[ligne][rang+1]=1
-#
-#            elif rang==len(Matrice):
-#                #Matrice[ligne-1][rang]=1
-#                Matrice[ligne][rang-1]=1
-#                #Matrice[ligne][rang+1]=1
-#
-#            else:
-#                pass
-#
-#        rang+=1
-#
-#    ligne+=1
-##phase de coloriage
-#
-#print(Matrice)
-#print(len(Matrice))
 
 
 """
