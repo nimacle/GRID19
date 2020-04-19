@@ -18,34 +18,97 @@ with open('C:/Users/henri/Downloads/COVID-19-master/cssecovid19data/cssecovid19d
     print(list_country)
 """
 
-ligne1=[0,1,0,0,0]
-ligne2=[0,0,0,0,0]
+ligne1=[0,0,0,0,0]
+ligne2=[0,0,1,0,0]
 ligne3=[0,0,1,0,0]
 ligne4=[0,1,0,0,0]
-ligne5=[0,0,0,1,0]
-
-print(ligne1)
-print(ligne2)
-print(ligne3)
-print(ligne4)
-print(ligne5)
-
-
-Matrice=np.array([ligne1,ligne2,ligne2,ligne3,ligne4,ligne5])
-
-print(Matrice[0][1])
+ligne5=[0,0,0,0,0]
 
 
 
-for day in range(0,1000):
-
-    #calcul des changements d'états
-
-    #phase de coloriage
+Matrice=np.array([ligne1,ligne2,ligne3,ligne4,ligne5])
 
 
+#app.n=population
+#app.r=transmition
+print("Matrice de départ:\n",Matrice,"\n\n")
+
+Ligne_liste_pointeurs_malades=[]
+Rang_liste_pointeurs_malades=[]
+
+# Get the index of elements with value 15
+result = np.where(Matrice == 1)
+
+listOfCoordinates= list(zip(result[0], result[1]))
 
 
+for coords in listOfCoordinates:
+    x=coords[0]
+    y=coords[1]
+
+    try:
+        Matrice[x-1][y]=1
+        Matrice[x][y+1]=1
+        Matrice[x][y-1]=1
+        Matrice[x+1][y]=1
+
+    except IndexError:      #cas ou c'est un bord
+            if y==0:
+                Matrice[x+1][y]=1
+                Matrice[x-1][y]=1
+                Matrice[x][y+1]=1
+
+            elif y==len(Matrice):
+                Matrice[x-1][y]=1
+                Matrice[x+1][y]=1
+                Matrice[x][y-1]=1
+
+            else:
+                pass
+print(Matrice)
+
+
+
+
+#for day in range(0,1):
+
+#calcul des changements d'états
+#ligne=0
+#for list in Matrice:
+#    rang=0
+#    for value in list:          #cas ou ce n'est pas un bord
+#        try:
+#            if value==1:
+#                #Matrice[ligne-1][rang]=1
+#                #Matrice[ligne+1][rang]=1
+#                #Matrice[ligne][rang-1]=1
+#                Matrice[ligne][rang+1]=1
+#                pass()
+#
+#            else:
+#                pass
+#
+#        except IndexError:      #cas ou c'est un bord
+#            if rang==0:
+#                #Matrice[ligne+1][rang]=1
+#                #Matrice[ligne][rang]=1
+#                Matrice[ligne][rang+1]=1
+#
+#            elif rang==len(Matrice):
+#                #Matrice[ligne-1][rang]=1
+#                Matrice[ligne][rang-1]=1
+#                #Matrice[ligne][rang+1]=1
+#
+#            else:
+#                pass
+#
+#        rang+=1
+#
+#    ligne+=1
+##phase de coloriage
+#
+#print(Matrice)
+#print(len(Matrice))
 
 
 """
@@ -59,5 +122,5 @@ def coloriage():
 #Population = nombre de personnes
 #R = nbre de personnes inféctées en moyenne
 #S = nbre de personnes soignées/immunisées
-#M = mortalité
-def change(Population, R, S, ):
+#
+#def change(Population, R, S, ):
