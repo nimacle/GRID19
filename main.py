@@ -2,9 +2,10 @@ import numpy as np
 import pandas
 import matplotlib.pyplot as plt
 import random
+from math import *
 
 
-n=int(input("Chosissez le nombre de population, doit etre un carré parfait (ex: 4, 9, 16, 25, 36, 49, 64, 81, 100...): "))
+n=int(sqrt(int(input("Chosissez le nombre de population, doit etre un carré parfait (ex: 4, 9, 16, 25, 36, 49, 64, 81, 100...): "))))
 
 Matrix=np.zeros([n,n], dtype=int)
 
@@ -16,6 +17,7 @@ def Simulation(Matrice, jours, population):
     start_x=random.randint(0,population)
     start_y=random.randint(0,population)
     Matrice[start_x][start_y]=1
+
     print("Matrice de départ:\n",Matrice,"\n\n")
 
     for i in range(0,jours):
@@ -27,53 +29,59 @@ def Simulation(Matrice, jours, population):
             x=coords[0]
             y=coords[1]
 
-            try:
-                Matrice[x-1][y]=1
-                Matrice[x][y+1]=1
-                Matrice[x][y-1]=1
+            if y==0 and x==0:                               #cas ou c'est un coin
                 Matrice[x+1][y]=1
+                Matrice[x][y+1]=1
+                pass
 
-            except IndexError:                                  #cas ou c'est un bord
+            elif y==0 and x==len(Matrice)-1:
+                Matrice[x-1][y]=1
+                Matrice[x][y+1]
+                pass
 
-                if y==0 and x==0:                               #cas ou c'est un coin
+            elif y==len(Matrice)-1 and x==0:
+                Matrice[x+1][y]=1
+                Matrice[x][y-1]=1
+                pass
+
+            elif y==len(Matrice)-1 and x==len(Matrice)-1:
+                Matrice[x-1][y]=1
+                Matrice[x][y-1]=1
+                pass
+
+            else:                                           #cas ou c'est un bord non coin
+
+                if y==0:
                     Matrice[x+1][y]=1
+                    Matrice[x-1][y]=1
                     Matrice[x][y+1]=1
+                    pass
 
-                elif y==0 and x==len(Matrice)-1:
+                elif y==len(Matrice)-1:
                     Matrice[x-1][y]=1
-                    Matrice[x][y+1]
-
-                elif y==len(Matrice) and x==0:
                     Matrice[x+1][y]=1
                     Matrice[x][y-1]=1
+                    pass
 
-                elif y==len(Matrice) and x==len(Matrice):
-                    Matrice[x-1][y]=1
+                elif x==0:
+                    Matrice[x][y+1]=1
+                    Matrice[x+1][y]=1
                     Matrice[x][y-1]=1
+                    pass
 
-                else:                                           #cas ou c'est un bord non coin
+                elif x==len(Matrice)-1:
+                    Matrice[x-1][y]=1
+                    Matrice[x][y+1]=1
+                    Matrice[x][y-1]=1
+                    pass
 
-                    if y==0:
-                        Matrice[x+1][y]=1
-                        Matrice[x-1][y]=1
-                        Matrice[x][y+1]=1
+                else:
+                    Matrice[x-1][y]=1
+                    Matrice[x][y+1]=1
+                    Matrice[x][y-1]=1
+                    Matrice[x+1][y]=1
+                    pass
 
-                    elif y==len(Matrice)-1:
-                        Matrice[x-1][y]=1
-                        Matrice[x+1][y]=1
-                        Matrice[x][y-1]=1
-
-                    elif x==0:
-                        Matrice[x][y+1]=1
-                        Matrice[x+1][y]=1
-                        Matrice[x][y-1]=1
-
-                    elif x==len(Matrice)-1:
-                        Matrice[x-1][y]=1
-                        Matrice[x][y+1]=1
-                        Matrice[x][y-1]=1
-                    else:
-                        pass
         print(Matrice)
 
 Simulation(Matrix,10, n)
