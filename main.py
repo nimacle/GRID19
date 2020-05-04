@@ -4,22 +4,20 @@ import matplotlib.pyplot as plt
 import random
 from math import *
 
-
-n=int(sqrt(int(input("Chosissez le nombre de population, doit etre un carré parfait (ex: 4, 9, 16, 25, 36, 49, 64, 81, 100...): "))))
-
-Matrix=np.zeros([n,n], dtype=int)
-
 #app.n=population
 #app.r=transmition
 
-def Simulation(Matrice, jours, population):
+def Simulation(jours, population):
+    
+    
+    l=[0]*(jours+1)
+    Matrice=np.zeros([population,population], dtype=int)
 
     start_x=random.randint(0,population)
     start_y=random.randint(0,population)
     Matrice[start_x][start_y]=1
-
-    print("Matrice de départ:\n",Matrice,"\n\n")
-
+    l[0]=np.copy(Matrice)
+    
     for i in range(0,jours):
         result = np.where(Matrice == 1)
         listOfCoordinates= list(zip(result[0], result[1]))
@@ -82,23 +80,7 @@ def Simulation(Matrice, jours, population):
                     Matrice[x+1][y]=1
                     pass
 
-        print(Matrice)
+        l[i+1]=np.copy(Matrice)
+    return l
 
-Simulation(Matrix,10, n)
-
-
-
-
-"""
-def coloriage():
-    for line in Matrice:
-        for value in line:
-            if Matrice[x][y]==0:
-                colorier en rouge
-            if Matrice[x][y]==1:
-"""
-#Population = nombre de personnes
-#R = nbre de personnes inféctées en moyenne
-#S = nbre de personnes soignées/immunisées
-#
-#def change(Population, R, S, ):
+l=Simulation(10, 10)
