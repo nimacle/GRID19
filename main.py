@@ -12,7 +12,7 @@ def Simulation(jours, population, infectiosite):
 
     l=[0]*(jours+1)
     Matrice=np.zeros([population,population], dtype=int)
-    max_r=4*100
+    max_r=8*100
     start_x=random.randint(0,population-1)
     start_y=random.randint(0,population-1)
     Matrice[start_x][start_y]=1
@@ -32,6 +32,8 @@ def Simulation(jours, population, infectiosite):
                     Matrice[x+1][y]=1
                 if random.randrange(0,max_r)<=r:
                     Matrice[x][y+1]=1
+                if random.randrange(0,max_r)<=r:
+                    Matrice[x+1][y+1]=1
                 continue
 
             elif y==0 and x==len(Matrice)-1:
@@ -39,6 +41,8 @@ def Simulation(jours, population, infectiosite):
                     Matrice[x-1][y]=1
                 if random.randrange(0,max_r)<=r:
                     Matrice[x][y+1]
+                if random.randrange(0,max_r)<=r:
+                    Matrice[x-1][y+1]=1
                 continue
 
             elif y==len(Matrice)-1 and x==0:
@@ -46,6 +50,8 @@ def Simulation(jours, population, infectiosite):
                     Matrice[x+1][y]=1
                 if random.randrange(0,max_r)<=r:
                     Matrice[x][y-1]=1
+                if random.randrange(0,max_r)<=r:
+                    Matrice[x+1][y-1]=1
                 continue
 
             elif y==len(Matrice)-1 and x==len(Matrice)-1:
@@ -53,6 +59,8 @@ def Simulation(jours, population, infectiosite):
                     Matrice[x-1][y]=1
                 if random.randrange(0,max_r)<=r:
                     Matrice[x][y-1]=1
+                if random.randrange(0,max_r)<=r:
+                    Matrice[x-1][y-1]=1
                 continue
 
             else:                                           #cas ou c'est un bord non coin
@@ -64,6 +72,10 @@ def Simulation(jours, population, infectiosite):
                         Matrice[x-1][y]=1
                     if random.randrange(0,max_r)<=r:
                         Matrice[x][y+1]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x+1][y+1]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x-1][y+1]=1
                     continue
 
                 elif y==len(Matrice)-1:
@@ -73,6 +85,10 @@ def Simulation(jours, population, infectiosite):
                         Matrice[x+1][y]=1
                     if random.randrange(0,max_r)<=r:
                         Matrice[x][y-1]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x+1][y-1]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x-1][y-1]=1
                     continue
 
                 elif x==0:
@@ -82,6 +98,10 @@ def Simulation(jours, population, infectiosite):
                         Matrice[x+1][y]=1
                     if random.randrange(0,max_r)<=r:
                         Matrice[x][y-1]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x+1][y+1]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x+1][y-1]=1
                     continue
 
                 elif x==len(Matrice)-1:
@@ -91,6 +111,10 @@ def Simulation(jours, population, infectiosite):
                         Matrice[x][y+1]=1
                     if random.randrange(0,max_r)<=r:
                         Matrice[x][y-1]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x-1][y+1]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x-1][y-1]=1
                     continue
 
                 else:
@@ -102,11 +126,18 @@ def Simulation(jours, population, infectiosite):
                         Matrice[x][y-1]=1
                     if random.randrange(0,max_r)<=r:
                         Matrice[x+1][y]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x+1][y+1]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x-1][y+1]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x+1][y-1]=1
+                    if random.randrange(0,max_r)<=r:
+                        Matrice[x-1][y-1]=1
                     continue
 
         l[i+1]=np.copy(Matrice)
     return l
 
-#print(Simulation(5, 10, 2))
+#print(Simulation(5, 10, 8))
 #l[jour][ordonnée][absisses]
-
