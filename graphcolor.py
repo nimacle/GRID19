@@ -56,7 +56,7 @@ class Application(tk.Frame):
         #curseur de R(infectiosité)
         self.Rtitle = tk.Label(self,text="R : ")
         self.Rtitle.grid(row=3,column=0)
-        self.RR = tk.Scale(self, width=25,orient=tk.HORIZONTAL,length=200,from_=0,to=4,resolution=0.1)
+        self.RR = tk.Scale(self, width=25,orient=tk.HORIZONTAL,length=200,from_=0,to=8,resolution=0.1)
         self.RR.grid(row=3,column=1)
 
         #bouton d'acces a la page de selection du mode de visualisation de l'epidémie
