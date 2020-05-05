@@ -27,10 +27,12 @@ class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
-        self.configure(background='#A0EBEF')
+        self.configure()
         self.pack()
-        self.EP()
         self.j=0
+        self.infecte=tk.StringVar(value="Nombre d'infecté au jour 0 : 1")
+        self.sain=tk.StringVar()
+        self.EP()
         
     
     
@@ -67,15 +69,19 @@ class Application(tk.Frame):
     
     def ES(self):
         '''widgets de la Fenetre de selection du mode de visualisation'''
-        self.n=self.population.get()
+        self.n=self.population.get()    #récupération dans deux variables de la population (racine de la population car cotée du carré)
         self.R=self.RR.get()
+        self.sain.set("Nombre de personnes saines au jour 0 : "+str(self.n**2-1))
         self.list_j=main.Simulation(50,self.n)
+        
+        # Convertiseur de chaque matrice de la liste en matrice de couleurs
         for i in range(51):
             self.list_j[i]=self.list_j[i].astype(str)
             self.list_j[i]=np.where(self.list_j[i]=="0",'black',self.list_j[i])
             self.list_j[i]=np.where(self.list_j[i]=="1",'red',self.list_j[i])
-        self.delete_frame()
-        print
+        
+        self.delete_frame() #Supression des widgets pour la nouvelle fenêtre
+        
         
         #Titre fenetre de selection du mode de visualisation
         self.titrefenetre1= tk.Label(self,text="Menu de selection du mode de visualisation des données\n",font=tkFont.Font(size=20))
@@ -112,10 +118,15 @@ class Application(tk.Frame):
         self.canvas["width"] = "900"     #taille du canvas
         self.canvas["height"] = "900"
         self.canvas.grid(column=0,columnspan=25,rowspan=25)    #alignement 
-        for b in range(self.n):
-            for c in range(self.n):
-                self.canvas.create_rectangle(b*self.a,c*self.a,(b*self.a)+self.a, (c*self.a)+self.a,fill=self.list_j[0][b][c])    #création des personnes
+        for b in range(self.n): #Absisse
+            for c in range(self.n): #Ordonnée
+                self.canvas.create_rectangle(b*self.a,c*self.a,(b*self.a)+self.a, (c*self.a)+self.a,fill=self.list_j[0][c][b])    #création des personnes
 
+        self.label_infecté = tk.Label(self,textvariable=self.infecte)
+        self.label_infecté.grid(row=8, column=26)
+        
+        self.label_sain = tk.Label(self,textvariable=self.sain)
+        self.label_sain.grid(row=9, column=26)
 
         # Selecteur échelle qui permet de selectionner le jour
         self.scale = tk.Scale(self, width=25,orient=tk.HORIZONTAL,length=200,from_=0,to=50)
@@ -134,11 +145,14 @@ class Application(tk.Frame):
         
         '''actualisation de la fenetre en fonction des nouvelles valeurs''' #pour l'instant uniquement un choix de couleurs
         
-        for b in range(self.n):
-            for c in range(self.n):
-                if app.list_j[self.j][b][c]!=app.list_j[self.scale.get()][b][c]:
-                    self.canvas.create_rectangle(b*self.a,c*self.a,(b*self.a)+self.a, (c*self.a)+self.a,fill=self.list_j[self.scale.get()][b][c])
+        for b in range(self.n): #Absisse
+            for c in range(self.n):    #Ordonnée
+                if app.list_j[self.j][c][b]!=app.list_j[self.scale.get()][c][b]:
+                    self.canvas.create_rectangle(b*self.a,c*self.a,(b*self.a)+self.a, (c*self.a)+self.a,fill=self.list_j[self.scale.get()][c][b])
         self.j=self.scale.get()
+        self.infecte.set("Nombre d'infecté au jour "+str(self.j)+" : "+str(np.count_nonzero(self.list_j[self.j]=='red')))
+        self.sain.set("Nombre de personnes saines au jour "+str(self.j)+" : "+str(np.count_nonzero(self.list_j[self.j]=='black')))
+        
         app.update()
         
         
