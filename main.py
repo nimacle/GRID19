@@ -20,7 +20,7 @@ def Simulation(jours, population, infectiosite, mortalite):
 
     for i in range(0,jours):
 
-        result = np.where(Matrice != 0)
+        result = np.where(Matrice == 1)
         listOfCoordinates= list(zip(result[0], result[1]))
 
 
@@ -28,121 +28,121 @@ def Simulation(jours, population, infectiosite, mortalite):
             x=coords[0]
             y=coords[1]
 
+            if random.random()<mortalite:
+                Matrice[x][y]=2
 
-            if Matrice[x][y]<8*mortalite:
-                if y==0 and x==0:                               #cas ou c'est un coin
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x+1][y]+=1
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x][y+1]+=1
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x+1][y+1]+=1
-                    continue
+            if y==0 and x==0:                               #cas ou c'est un coin
+                if random.randrange(0,max_r)<=r and Matrice[x+1][y]!=2:
+                    Matrice[x+1][y]=1
+                if random.randrange(0,max_r)<=r and Matrice[x][y+1]!=2:
+                    Matrice[x][y+1]=1
+                if random.randrange(0,max_r)<=r and Matrice[x+1][y+1]!=2:
+                    Matrice[x+1][y+1]=1
+                continue
 
-                elif y==0 and x==len(Matrice)-1:
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x-1][y]+=1
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x][y+1]+=1
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x-1][y+1]+=1
-                    continue
+            elif y==0 and x==len(Matrice)-1:
+                if random.randrange(0,max_r)<=r and Matrice[x-1][y]!=2:
+                    Matrice[x-1][y]=1
+                if random.randrange(0,max_r)<=r and Matrice[x][y+1]!=2:
+                    Matrice[x][y+1]=1
+                if random.randrange(0,max_r)<=r and Matrice[x-1][y+1]!=2:
+                    Matrice[x-1][y+1]=1
+                continue
 
-                elif y==len(Matrice)-1 and x==0:
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x+1][y]+=1
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x][y-1]+=1
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x+1][y-1]+=1
-                    continue
+            elif y==len(Matrice)-1 and x==0:
+                if random.randrange(0,max_r)<=r and Matrice[x+1][y]!=2:
+                    Matrice[x+1][y]=1
+                if random.randrange(0,max_r)<=r and Matrice[x][y-1]!=2:
+                    Matrice[x][y-1]=1
+                if random.randrange(0,max_r)<=r and Matrice[x+1][y-1]!=2:
+                    Matrice[x+1][y-1]=1
+                continue
 
-                elif y==len(Matrice)-1 and x==len(Matrice)-1:
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x-1][y]+=1
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x][y-1]+=1
-                    if random.randrange(0,max_r)<=r:
-                        Matrice[x-1][y-1]+=1
-                    continue
+            elif y==len(Matrice)-1 and x==len(Matrice)-1:
+                if random.randrange(0,max_r)<=r and Matrice[x-1][y]!=2:
+                    Matrice[x-1][y]=1
+                if random.randrange(0,max_r)<=r and Matrice[x][y-1]!=2:
+                    Matrice[x][y-1]=1
+                if random.randrange(0,max_r)<=r and Matrice[x-1][y-1]!=2:
+                    Matrice[x-1][y-1]=1
+                continue
 
-                else:                                           #cas ou c'est un bord non coin
+            else:                                           #cas ou c'est un bord non coin
 
                     if y==0:
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x+1][y]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x-1][y]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x][y+1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x+1][y+1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x-1][y+1]+=1
+                        if random.randrange(0,max_r)<=r and Matrice[x+1][y]!=2:
+                            Matrice[x+1][y]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x-1][y]!=2:
+                            Matrice[x-1][y]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x][y+1]!=2:
+                            Matrice[x][y+1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x+1][y+1]!=2:
+                            Matrice[x+1][y+1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x-1][y+1]!=2:
+                            Matrice[x-1][y+1]=1
                         continue
 
                     elif y==len(Matrice)-1:
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x-1][y]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x+1][y]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x][y-1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x+1][y-1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x-1][y-1]+=1
+                        if random.randrange(0,max_r)<=r and Matrice[x-1][y]!=2:
+                            Matrice[x-1][y]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x+1][y]!=2:
+                            Matrice[x+1][y]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x][y-1]!=2:
+                            Matrice[x][y-1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x+1][y-1]!=2:
+                            Matrice[x+1][y-1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x-1][y-1]!=2:
+                            Matrice[x-1][y-1]=1
                         continue
 
                     elif x==0:
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x][y+1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x+1][y]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x][y-1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x+1][y+1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x+1][y-1]+=1
+                        if random.randrange(0,max_r)<=r and Matrice[x][y+1]!=2:
+                            Matrice[x][y+1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x+1][y]!=2:
+                            Matrice[x+1][y]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x][y-1]!=2:
+                            Matrice[x][y-1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x+1][y+1]!=2:
+                            Matrice[x+1][y+1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x+1][y-1]!=2:
+                            Matrice[x+1][y-1]=1
                         continue
 
                     elif x==len(Matrice)-1:
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x-1][y]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x][y+1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x][y-1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x-1][y+1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x-1][y-1]+=1
+                        if random.randrange(0,max_r)<=r and Matrice[x-1][y]!=2:
+                            Matrice[x-1][y]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x][y+1]!=2:
+                            Matrice[x][y+1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x][y-1]!=2:
+                            Matrice[x][y-1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x-1][y+1]!=2:
+                            Matrice[x-1][y+1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x-1][y-1]!=2:
+                            Matrice[x-1][y-1]=1
                         continue
 
                     else:
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x-1][y]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x][y+1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x][y-1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x+1][y]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x+1][y+1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x-1][y+1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x+1][y-1]+=1
-                        if random.randrange(0,max_r)<=r:
-                            Matrice[x-1][y-1]+=1
+                        if random.randrange(0,max_r)<=r and Matrice[x-1][y]!=2:
+                            Matrice[x-1][y]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x][y+1]!=2:
+                            Matrice[x][y+1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x][y-1]!=2:
+                            Matrice[x][y-1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x+1][y]!=2:
+                            Matrice[x+1][y]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x+1][y+1]!=2:
+                            Matrice[x+1][y+1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x-1][y+1]!=2:
+                            Matrice[x-1][y+1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x+1][y-1]!=2:
+                            Matrice[x+1][y-1]=1
+                        if random.randrange(0,max_r)<=r and Matrice[x-1][y-1]!=2:
+                            Matrice[x-1][y-1]=1
                         continue
-            else:
-                Matrice[x][y]=8*mortalite
+
         l[i+1]=np.copy(Matrice)
     return l
 
-print(Simulation(10, 15, 8, 5))
+#print(Simulation(10, 15, 8, 0.2))
 #l[jour][ordonnée][absisses]
 
