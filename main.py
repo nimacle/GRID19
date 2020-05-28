@@ -8,13 +8,14 @@ from math import *
 #app.r=transmition
 
 def Simulation(jours, population, infectiosite, mortalite):
+    
     r=int(infectiosite*100)
 
     l=[0]*(jours+1)
     Matrice=np.zeros([population,population], dtype=int)
     max_r=8*100
-    start_x=random.randint(0,population-1)
-    start_y=random.randint(0,population-1)
+    start_x=random.randint(int(population/4),int(3*population/4))
+    start_y=random.randint(int(population/4),int(3*population/4))
     Matrice[start_x][start_y]=1
     l[0]=np.copy(Matrice)
 
@@ -141,8 +142,8 @@ def Simulation(jours, population, infectiosite, mortalite):
                         continue
 
         l[i+1]=np.copy(Matrice)
+    
     return l
 
 #print(Simulation(10, 15, 8, 0.2))
 #l[jour][ordonnée][absisses]
-
