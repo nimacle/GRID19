@@ -54,10 +54,15 @@ class Application(tk.Frame):
         self.population.grid(row=2,column=1)
 
         #curseur de R(infectiosité)
-        self.Rtitle = tk.Label(self,text="R : ")
+        self.Rtitle = tk.Label(self,text="Infectiosité : ")
         self.Rtitle.grid(row=3,column=0)
         self.RR = tk.Scale(self, width=25,orient=tk.HORIZONTAL,length=200,from_=0,to=8,resolution=0.1)
         self.RR.grid(row=3,column=1)
+        
+        self.Mtitle = tk.Label(self,text="Mortalité : ")
+        self.Mtitle.grid(row=4,column=0)
+        self.MM = tk.Scale(self, width=25,orient=tk.HORIZONTAL,length=200,from_=0,to=1,resolution=0.01)
+        self.MM.grid(row=4,column=1)
 
         #bouton d'acces a la page de selection du mode de visualisation de l'epidémie
         self.accesES = tk.Button(self, text="Simuler", fg="black",command=self.ES)
@@ -71,14 +76,16 @@ class Application(tk.Frame):
         '''widgets de la Fenetre de selection du mode de visualisation'''
         self.n=self.population.get()    #récupération dans deux variables de la population (racine de la population car cotée du carré)
         self.R=self.RR.get()
+        self.M=self.MM.get()
         self.sain.set("Nombre de personnes saines au jour 0 : "+str(self.n**2-1))
-        self.list_j=main.Simulation(50,self.n,self.R)
+        self.list_j=main.Simulation(200,self.n,self.R,self.M)
 
         # Convertiseur de chaque matrice de la liste en matrice de couleurs
-        for i in range(51):
+        for i in range(201):
             self.list_j[i]=self.list_j[i].astype(str)
             self.list_j[i]=np.where(self.list_j[i]=="0",'black',self.list_j[i])
             self.list_j[i]=np.where(self.list_j[i]=="1",'red',self.list_j[i])
+            self.list_j[i]=np.where(self.list_j[i]=="2",'green',self.list_j[i])
 
         self.delete_frame() #Supression des widgets pour la nouvelle fenêtre
 
@@ -129,7 +136,7 @@ class Application(tk.Frame):
         self.label_sain.grid(row=9, column=26)
 
         # Selecteur échelle qui permet de selectionner le jour
-        self.scale = tk.Scale(self, width=25,orient=tk.HORIZONTAL,length=200,from_=0,to=50)
+        self.scale = tk.Scale(self, width=25,orient=tk.HORIZONTAL,length=200,from_=0,to=200)
         self.scale.grid(row=11,column=26)
 
         # Bouton d'actualisation des couleurs
